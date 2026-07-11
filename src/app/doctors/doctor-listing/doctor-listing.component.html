@@ -1,0 +1,124 @@
+<div class="doctor-home-page">
+	<header class="top-banner">
+		<div>
+			<p class="eyebrow">Online Doctor Consultation</p>
+			<h1>Popular Doctors</h1>
+			<p class="subtitle">Book a consultation with verified doctors.</p>
+		</div>
+
+		<label class="search-box" for="doctorSearch">
+			<span>Search</span>
+			<input
+				id="doctorSearch"
+				type="text"
+				placeholder="Search by doctor, speciality, hospital"
+				[(ngModel)]="searchText"
+			/>
+		</label>
+	</header>
+
+	<div class="content-layout">
+		<aside class="filters-panel">
+			<div class="filters-header">
+				<h2>Filter By</h2>
+				<button class="clear-filters-btn" type="button" (click)="clearAllFilters()">Clear all</button>
+			</div>
+
+			<section class="filter-group">
+				<h3>Sort By</h3>
+				<select class="sort-select" [(ngModel)]="sortBy">
+					<option *ngFor="let option of sortOptions" [value]="option.value">{{ option.label }}</option>
+				</select>
+			</section>
+
+			<section class="filter-group">
+				<h3>Speciality</h3>
+				<button
+					class="filter-chip"
+					type="button"
+					*ngFor="let speciality of specialities"
+					[class.selected]="selectedSpecialities.includes(speciality)"
+					(click)="toggleSelection(speciality, selectedSpecialities)"
+				>
+					{{ speciality }}
+				</button>
+			</section>
+
+			<section class="filter-group">
+				<h3>Language</h3>
+				<button
+					class="filter-chip"
+					type="button"
+					*ngFor="let language of languages"
+					[class.selected]="selectedLanguages.includes(language)"
+					(click)="toggleSelection(language, selectedLanguages)"
+				>
+					{{ language }}
+				</button>
+			</section>
+
+		<section class="filter-group">
+			<div class="range-header">
+				<h3>Consultation Fee</h3>
+				<span class="range-value">Up to Rs. {{ maxConsultationFee }}</span>
+			</div>
+			<input
+				class="fee-slider"
+				type="range"
+				[min]="0"
+				[max]="highestConsultationFee"
+				step="50"
+				[(ngModel)]="maxConsultationFee"
+			/>
+		</section>
+
+			<section class="filter-group">
+				<h3>Doctor Gender</h3>
+				<button
+					class="filter-chip"
+					type="button"
+					*ngFor="let gender of genderOptions"
+					[class.selected]="selectedGender.includes(gender)"
+					(click)="toggleSelection(gender, selectedGender)"
+				>
+					{{ gender }}
+				</button>
+			</section>
+		</aside>
+
+		<section class="doctor-cards-panel">
+			<article class="doctor-card" *ngFor="let doctor of filteredDoctors">
+				<div class="avatar">
+					<img
+						[src]="doctor.profileImage?.imageUrl || 'https://via.placeholder.com/80?text=Dr'"
+						[alt]="doctor.firstName.charAt(0)"
+					/>
+				</div>
+
+				<div class="doctor-card-content">
+					<h3>{{ doctor.firstName }} {{ doctor.lastName }}</h3>
+					<p class="meta">{{ doctor.specializations.length ? doctor.specializations.join(', ') : 'General Physician' }} • {{ doctor.yearsOfExperience }} years experience</p>
+					<p class="meta">{{ doctor.clinicAddress }}, {{ doctor.city }}</p>
+					<p class="meta">Languages: {{ doctor.languages.join(', ') }}</p>
+					<div class="doctor-info-footer">
+						<!-- <span class="rating">⭐ {{ doctor.rating }}</span> -->
+						<span class="fee">Rs. {{ doctor.consultationFee }}</span>
+					</div>
+				</div>
+
+				<button
+					class="book-btn"
+					type="button"
+					[class.selected-book]="selectedDoctorId === doctor.id"
+					(click)="onBook(doctor)"
+				>
+					{{ selectedDoctorId === doctor.id ? 'Selected' : 'Book' }}
+				</button>
+			</article>
+
+			<p class="empty-state" *ngIf="filteredDoctors.length === 0">
+				No doctors match the selected filters.
+			</p>
+		</section>
+	</div>
+</div>
