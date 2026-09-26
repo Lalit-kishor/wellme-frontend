@@ -1,0 +1,97 @@
+<div class="booking-page">
+    @if (loading()) {
+    <div class="state-panel">
+        <mat-spinner diameter="36"></mat-spinner>
+        <p>Loading availability…</p>
+    </div>
+    } @else if (errorMessage()) {
+    <div class="state-panel state-panel--error">
+        <mat-icon>error_outline</mat-icon>
+        <p>{{ errorMessage() }}</p>
+    </div>
+    } @else {
+    <div class="booking-layout">
+        <!-- Doc Details + Hospital Details -->
+        <mat-card class="doctor-card">
+            @if (doctor(); as doc) {
+            <div class="doctor-card__header">
+                @if (doc.profileImageUrl) {
+                <img class="doctor-card__avatar" [src]="doc.profileImageUrl" [alt]="fullName(doc)" />
+                } @else {
+                <div class="doctor-card__avatar doctor-card__avatar--fallback">
+                    {{ initials(doc) }}
+                </div>
+                }
+
+                <div>
+                    <p class="eyebrow">Doc Details</p>
+                    <h2 class="doctor-card__name">Dr. {{ fullName(doc) }}</h2>
+                    <p class="doctor-card__specialization">{{ doc.specializations.join(', ') }}</p>
+                </div>
+            </div>
+
+            <div class="doctor-card__meta">
+                <span class="meta-chip">
+                    <mat-icon>work_outline</mat-icon>{{ doc.yearsOfExperience }} yrs exp
+                </span>
+                <span class="meta-chip">
+                    <mat-icon>translate</mat-icon>{{ doc.languages.join(', ') }}
+                </span>
+                <span class="meta-chip meta-chip--fee">
+                    <mat-icon>currency_rupee</mat-icon>{{ doc.consultationFee }} / visit
+                </span>
+            </div>
+
+            <div class="doctor-card__divider"></div>
+
+            <div class="hospital-details">
+                <p class="eyebrow"><mat-icon>local_hospital</mat-icon> Hospital Details</p>
+                <p class="hospital-details__address">{{ doc.clinicAddress }}, {{ doc.city }}</p>
+            </div>
+            }
+        </mat-card>
+
+        <!-- Slot Information -->
+        <mat-card class="slots-card">
+            <h3 class="slots-card__title">Slot Information</h3>
+
+            @if (slotGroups().length === 0) {
+            <div class="empty-state">
+                <mat-icon>event_busy</mat-icon>
+                <p>No upcoming availability right now.</p>
+                <span>Check back soon, or browse other doctors.</span>
+            </div>
+            } @else {
+            <div class="slot-groups">
+                @for (group of slotGroups(); track group.date) {
+                <div class="slot-group">
+                    <p class="slot-group__date">{{ formatDate(group.date) }}</p>
+                    <div class="slot-group__chips">
+                        @for (slot of group.slots; track slot.id) {
+                        <button type="button" class="slot-chip" [class.slot-chip--selected]="isSelected(slot)"
+                            (click)="selectSlot(slot)">
+                            {{ formatTime(slot.startTime) }}
+                        </button>
+                        }
+                    </div>
+                </div>
+                }
+            </div>
+            }
+        </mat-card>
+    </div>
+
+    <!-- Confirm bar, ticket-stub style -->
+    @if (selectedSlot(); as slot) {
+    <div class="confirm-bar">
+        <div class="confirm-bar__stub">
+            <mat-icon>event_available</mat-icon>
+            <span>{{ selectedSlotLabel() }}</span>
+        </div>
+        <button type="button" class="confirm-bar__button" (click)="confirmSlot()">
+            Confirm Slot
+        </button>
+    </div>
+    }
+    }
+</div>

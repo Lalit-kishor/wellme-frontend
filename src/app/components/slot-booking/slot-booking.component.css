@@ -1,0 +1,407 @@
+/* --- Modern Design Tokens --- */
+:host {
+    --navy: #0f172a;
+    --navy-light: #1e293b;
+    --paper: #f8fafc;
+    --sage: #64748b;
+    --amber: #f59e0b;
+    --amber-hover: #d97706;
+    --border: #e2e8f0;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+
+    display: block;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    color: var(--navy);
+    min-height: 100vh;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+/* --- State Panels --- */
+.state-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    gap: 1rem;
+}
+
+.state-panel--error {
+    color: #dc2626;
+}
+
+/* --- Main Layout --- */
+.booking-layout {
+    display: grid;
+    grid-template-columns: 380px minmax(0, 1fr);
+    gap: 2.5rem;
+    align-items: start;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-bottom: 120px
+}
+
+@media (max-width: 1024px) {
+    .booking-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- Material Card Resets --- */
+mat-card {
+    border-radius: 20px !important;
+    box-shadow: var(--shadow-lg) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 0 !important;
+    background: white !important;
+    overflow: hidden;
+}
+
+/* --- Doctor Card (The "Boarding Pass" Sidebar) --- */
+.doctor-card {
+    position: sticky;
+    top: 2rem;
+}
+
+.doctor-card__header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    padding: 3rem 2rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    color: white;
+}
+
+/* Overlapping Avatar */
+.doctor-card__avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid white;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 1rem;
+    background: white;
+}
+
+.doctor-card__avatar--fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber);
+    color: white;
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.doctor-card__header .eyebrow {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.doctor-card__name {
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+.doctor-card__specialization {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Meta chips area */
+.doctor-card__meta {
+    padding: 1.5rem 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    background: white;
+}
+
+.meta-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: var(--paper);
+    padding: 0.5rem 0.85rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--navy);
+    border: 1px solid var(--border);
+}
+
+.meta-chip mat-icon {
+    font-size: 1rem;
+    width: 1rem;
+    height: 1rem;
+    color: var(--sage);
+}
+
+.meta-chip--fee {
+    background: #fef3c7;
+    color: #92400e;
+    border-color: #fde68a;
+}
+
+.meta-chip--fee mat-icon {
+    color: #b45309;
+}
+
+.doctor-card__divider {
+    height: 2px;
+    background-image: linear-gradient(to right, var(--border) 50%, transparent 50%);
+    background-size: 12px 100%;
+    margin: 0 2rem;
+}
+
+.hospital-details {
+    padding: 1.5rem 2rem 2rem;
+    text-align: center;
+    background: white;
+}
+
+.hospital-details .eyebrow {
+    justify-content: center;
+    color: var(--sage);
+}
+
+.hospital-details__address {
+    font-size: 0.95rem;
+    color: var(--navy);
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* --- Slots Card --- */
+.slots-card {
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.slots-card__title {
+    padding: 1.5rem 2rem;
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--navy);
+    background: white;
+    border-bottom: 2px dashed var(--border);
+}
+
+.empty-state {
+    padding: 6rem 2rem;
+    text-align: center;
+    color: var(--sage);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-grow: 1;
+}
+
+.empty-state mat-icon {
+    font-size: 4rem;
+    width: 4rem;
+    height: 4rem;
+    color: var(--border);
+}
+
+/* --- Slot Groups --- */
+.slot-groups {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+}
+
+.slot-group {
+    padding: 1.5rem 2rem;
+    border-bottom: 2px dashed var(--border);
+    position: relative;
+}
+
+.slot-group::before,
+.slot-group::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 24px;
+    height: 24px;
+    background-color: white;
+    /* Match card bg */
+    border-radius: 50%;
+    transform: translateY(-50%);
+    box-shadow: inset 0 0 0 2px var(--border);
+}
+
+.slot-group::before {
+    left: -14px;
+}
+
+.slot-group::after {
+    right: -14px;
+}
+
+.slot-group:last-child {
+    border-bottom: none;
+}
+
+.slot-group__date {
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--navy);
+    margin: 0 0 1.25rem 0;
+    display: inline-block;
+    background: var(--paper);
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+}
+
+.slot-group__chips {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 0.75rem;
+}
+
+/* --- Modern Time Chips --- */
+.slot-chip {
+    font-family: 'Roboto Mono', 'Courier New', monospace;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.75rem 0.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: white;
+    color: var(--navy);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+}
+
+.slot-chip:hover {
+    border-color: var(--navy);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.slot-chip--selected {
+    background: var(--navy);
+    color: white;
+    border-color: var(--navy);
+    box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.3);
+    transform: translateY(-2px);
+}
+
+/* --- Confirm Bar (Floating Ticket Stub) --- */
+.confirm-bar {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 4rem);
+    max-width: 800px;
+    background: var(--navy);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 2.5rem;
+    border-radius: 100px;
+    box-shadow: var(--shadow-xl), 0 0 0 4px rgba(15, 23, 42, 0.1);
+    z-index: 1000;
+    animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+    from {
+        transform: translate(-50%, 150%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+}
+
+/* Ticket Stub Cutouts */
+.confirm-bar::before,
+.confirm-bar::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 32px;
+    height: 32px;
+    background-color: var(--paper);
+    /* Matches page background */
+    border-radius: 50%;
+    transform: translateY(-50%);
+    box-shadow: inset 0 0 0 4px var(--navy);
+    /* The cutout border */
+}
+
+.confirm-bar::before {
+    left: -16px;
+}
+
+.confirm-bar::after {
+    right: -16px;
+}
+
+.confirm-bar__stub {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.confirm-bar__stub mat-icon {
+    color: var(--amber);
+    font-size: 1.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.confirm-bar__button {
+    background: var(--amber);
+    color: var(--navy);
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 100px;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 4px 6px -1px rgba(245, 158, 11, 0.4);
+}
+
+.confirm-bar__button:hover {
+    background: var(--amber-hover);
+    transform: scale(1.02);
+    box-shadow: 0 10px 15px -3px rgba(245, 158, 11, 0.5);
+}
