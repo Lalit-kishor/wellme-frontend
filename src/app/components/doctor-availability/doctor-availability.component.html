@@ -1,0 +1,60 @@
+<div class="doctor-signup-container">
+    <div class="doctor-signup-card">
+
+        <form (ngSubmit)="onSubmit()" #doctorAvailabilityForm="ngForm">
+
+            <p class="availability-subtitle">
+                Select available weekdays and provide one or more time slots for each selected day.
+            </p>
+
+            <div class="day-card" *ngFor="let dayAvailability of availabilityByDay; let dayIndex = index">
+                <label class="day-header" [for]="'availableDay' + dayIndex">
+                    <input type="checkbox" [id]="'availableDay' + dayIndex" [name]="'availableDay' + dayIndex"
+                        [(ngModel)]="dayAvailability.isSelected" (change)="onDayAvailabilityToggle(dayAvailability)" />
+                    <span>{{ dayAvailability.day }}</span>
+                </label>
+
+                <div class="slots-container" *ngIf="dayAvailability.isSelected">
+                    <div class="slot-row" *ngFor="let slot of dayAvailability.slots; let slotIndex = index">
+                        <div class="slot-field">
+                            <label [for]="'startTime' + dayIndex + '_' + slotIndex">Start Time</label>
+                            <input type="time" class="form-control" [id]="'startTime' + dayIndex + '_' + slotIndex"
+                                [name]="'startTime' + dayIndex + '_' + slotIndex" [(ngModel)]="slot.startTime" />
+                        </div>
+
+                        <div class="slot-field">
+                            <label [for]="'endTime' + dayIndex + '_' + slotIndex">End Time</label>
+                            <input type="time" class="form-control" [id]="'endTime' + dayIndex + '_' + slotIndex"
+                                [name]="'endTime' + dayIndex + '_' + slotIndex" [(ngModel)]="slot.endTime" />
+                        </div>
+
+                        <button type="button" class="btn-icon btn-remove"
+                            (click)="removeSlot(dayAvailability, slotIndex)"
+                            [disabled]="dayAvailability.slots.length === 1">
+                            Remove
+                        </button>
+                    </div>
+
+                    <button type="button" class="btn-secondary btn-add-slot" (click)="addSlot(dayAvailability)">
+                        + Add Slot
+                    </button>
+                </div>
+            </div>
+
+            <div class="error-message" *ngIf="errorMessage">
+                {{ errorMessage }}
+            </div>
+
+            <div class="success-message" *ngIf="successMessage">
+                {{ successMessage }}
+            </div>
+
+            <div class="step-actions">
+
+                <button type="submit" class="btn-primary" [disabled]="isLoading">
+                    {{ isLoading ? 'Saving...' : 'Save' }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
