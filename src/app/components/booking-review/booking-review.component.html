@@ -1,0 +1,63 @@
+<div class="review-page">
+    <h1 class="page-title">Confirm your appointment</h1>
+
+    <div class="review-layout">
+        <!-- Left Column: Appointment Details -->
+        <div class="details-section">
+            <h2 class="section-title">Appointment Details</h2>
+
+            <mat-card class="ticket-card">
+                @if (doctor(); as doc) {
+                <div class="ticket-header">
+                    <div class="avatar-wrapper">
+                        @if (doc.profileImageUrl) {
+                        <img [src]="doc.profileImageUrl" [alt]="doc.firstName" />
+                        } @else {
+                        <div class="avatar-fallback">{{ initials(doc) }}</div>
+                        }
+                    </div>
+                    <div class="header-info">
+                        <h3>Dr. {{ doc.firstName }} {{ doc.lastName }}</h3>
+                        <p class="specialization">{{ doc.specializations.join(', ') }}</p>
+                        <p class="meta-text">{{ doc.yearsOfExperience }} YEARS • PhD - Psychology</p>
+                    </div>
+                </div>
+
+                <div class="ticket-divider"></div>
+
+                <div class="ticket-body">
+                    <span class="consult-badge">DIGITAL CONSULT</span>
+
+                    @if (slot(); as selectedSlot) {
+                    <div class="datetime-row">
+                        <mat-icon>calendar_today</mat-icon>
+                        <span>{{ formatDate(selectedSlot.date) }}, {{ formatTime(selectedSlot.startTime) }}</span>
+                    </div>
+                    }
+                </div>
+                }
+            </mat-card>
+        </div>
+
+        <!-- Right Column: Payment Summary -->
+        <div class="payment-section">
+            <h2 class="section-title">Pay to Confirm</h2>
+
+            <mat-card class="payment-card">
+                <div class="amount-row">
+                    <span class="label">To Pay</span>
+                    <span class="amount">₹{{ doctor()?.consultationFee }}</span>
+                </div>
+
+                <button class="pay-btn" type="button" (click)="onPay()">
+                    Pay
+                </button>
+
+                <p class="terms-text">
+                    By proceeding to avail a consultation, you agree to our
+                    <a href="#">Terms of use</a>.
+                </p>
+            </mat-card>
+        </div>
+    </div>
+</div>
